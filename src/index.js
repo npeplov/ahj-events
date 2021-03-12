@@ -1,3 +1,2 @@
-import './js/app';
+import './js/app.js';
 import './style.css';
-// import './images/goblin.png';
