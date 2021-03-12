@@ -1,7 +1,7 @@
 #### Домашние задания к курсу «Продвинутый JavaScript в браузере»
 ### 3. Events
 
-[![Build](https://ci.appveyor.com/api/projects/status/f0j1oajix08o230u?svg=true)](https://ci.appveyor.com/project/npeplov/ahj-dom)
+[![Build](https://ci.appveyor.com/api/projects/status/d1jjwlo8bdyhixaj?svg=true)](https://ci.appveyor.com/project/npeplov/ahj-events)
 
 Environment: https://npeplov.github.io/ahj-events/
 
