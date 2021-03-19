@@ -1,25 +1,37 @@
 export default class Logic {
   constructor(gui) {
-    this.scores = { vic: 0, loose: 0 };
     this.gui = gui;
+    this.scores = { vic: 0, loose: 0 };
+    this.checkTarget = this.checkTarget.bind(this);
   }
 
   init() {
-    this.gui.parentDiv.addEventListener('click', this.target.bind(this));
+    this.gui.parentDiv.addEventListener('click', this.checkTarget);
+    this.gui.setActive();
+    this.timerId = setInterval(() => {
+      const gameOver = this.checkScores(false);
+      if (gameOver) return;
+      this.gui.gameState(this.scores, '');
+      this.gui.setActive();
+    }, 1000);
   }
 
-  checkScores() {
+  checkScores(clickEvent) {
     if (this.scores.loose >= 5 || this.scores.vic >= 5) {
-      clearInterval(this.gui.timerId);
-      this.gui.gameOver(this.scores);
-    }
+      clearInterval(this.timerId);
+      this.gui.parentDiv.removeEventListener('click', this.checkTarget);
+      this.gui.gameState(this.scores, 'Игра окончена');
+      return true;
+    } if (!clickEvent) this.scores.loose += +1;
+    else this.scores.loose -= 1;
+    return false;
   }
 
-  target(e) {
+  checkTarget(e) {
     if (e.target === this.gui.img) {
       this.scores.vic += 1;
       this.gui.removeImg();
-    } else this.scores.loose += 1;
-    this.checkScores();
+      this.checkScores(true);
+    }
   }
 }

@@ -4,8 +4,9 @@ export default class Gui {
   constructor() {
     [this.img] = document.images;
     [this.parentDiv] = document.getElementsByClassName('wrapper');
-    [this.gameOverDiv] = document.getElementsByClassName('gameover');
-    this.timerId = setInterval(this.setActive.bind(this), 1000);
+    [this.gameStateDiv] = document.getElementsByClassName('gamestate');
+    this.setActive = this.setActive.bind(this);
+    this.oldIndex = null;
   }
 
   init() {
@@ -24,7 +25,8 @@ export default class Gui {
     if (document.images[0]) this.removeImg();
 
     const childDivs = this.parentDiv.children;
-    const index = genPosition();
+    const index = genPosition(this.oldIndex);
+    this.oldIndex = index;
     childDivs[index].appendChild(this.img);
   }
 
@@ -33,10 +35,10 @@ export default class Gui {
     activeDiv.removeChild(this.img);
   }
 
-  gameOver(scores) {
-    this.gameOverDiv.innerHTML = `
-    <h3>Игра окончена</h3>
-    Попал: <strong>${scores.vic}</strong>, Промахнулся: <strong>${scores.loose}</strong>
+  gameState(scores, status) {
+    this.gameStateDiv.innerHTML = `
+    <h3>${status}</h3>
+    Попал: <strong>${scores.vic}</strong>, Промахнулся: <strong>${scores.loose}</strong> 
     `;
   }
 }
